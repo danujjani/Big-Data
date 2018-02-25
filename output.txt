@@ -1,31 +1,100 @@
-Club	1
-Club	2
-Club	3
-Club	4
-Club	5
-Club	11
-Club	12
-Club	13
-Diamond	2
-Diamond	5
-Diamond	9
-Diamond	10
-Diamond	11
-Diamond	12
-Diamond	13
-Heart	3
-Heart	4
-Heart	5
-Heart	6
-Heart	7
-Heart	8
-Heart	9
-Heart	12
-Spade	6
-Spade	7
-Spade	8
-Spade	9
-Spade	10
-Spade	11
-Spade	12
-Spade	13
+urls isIP       0.9994487827285254
+SHORT DESCRIPTION       0.9993674889310563
+overlaps with   0.9993673555461831
+EDIT reason     0.9991733259851199
+DATE OF 0.9985745961355718
+Heteroneura familia     0.9982578397212544
+noredirect 1    0.9982046678635548
+listclass hlist 0.9974093264248705
+resolves to     0.9967558799675588
+Beetstra page   0.9962299717247879
+VernoWhitney talk       0.9953051643192489
+wouldn t        0.9946949602122016
+wikidomain w    0.9946300715990454
+ttl title       0.9943502824858758
+Vidhan Sabha    0.9943181818181818
+NOINDEX Links   0.9942418426103646
+antarid id      0.9939759036144579
+roadlink state  0.9935483870967742
+Derived from    0.9921875
+According to    0.9920318725099602
+Animalia phylum 0.9919028340080972
+infraordo Heteroneura   0.9913494809688581
+overlap Username        0.9913494809688581
+Angiosperms unranked_classis    0.991304347826087
+tarnishing or   0.991304347826087
+complies with   0.9911504424778761
+italic title    0.9911111111111112
+stdinchicite correct    0.9907178217821783
+XWiki only      0.9904761904761905
+Thu Nov 0.989282769991756
+Subsequent comments     0.989247311827957
+Ritzman talk    0.9891891891891892
+according to    0.9884868421052632
+watched box     0.9880141650776355
+WARNING In      0.9878048780487805
+Apps Goals      0.9877675840978594
+Relisted to     0.9876923076923076
+Persondata NAME 0.9874804381846636
+13180 L 0.9873417721518988
+3566 L  0.9873417721518988
+savy spot       0.9873417721518988
+10482 L 0.9871794871794872
+doesn t 0.9871547848426461
+foreseeable future      0.9871244635193133
+Divebomb is     0.9866666666666667
+don t   0.9865020103388857
+NJT station     0.9859154929577465
+Wed Nov 0.9859154929577465
+Acetarsol diff  0.9848484848484849
+7933 L  0.9841269841269841
+Americanfootballbox titlestyle  0.9841269841269841
+squad2 player   0.9836065573770492
+Riria Hotere    0.9833333333333333
+wpReason 5B     0.9832904884318766
+unable to       0.9831081081081081
+Stanbic Bank    0.9830508474576272
+reservoir_catchment reservoir_surface   0.9830508474576272
+Overseer of     0.9827586206896551
+shouldn t       0.9824561403508771
+tends to        0.9824561403508771
+established_date2 established_title3    0.9821428571428571
+population_density_metro_km2 population_density_metro_sq_mi     0.9821428571428571
+zgrajeni leta   0.9821428571428571
+GabeMc talk     0.9818181818181818
+belonging to    0.9818181818181818
+established_date3 area_magnitude        0.9818181818181818
+hydraulic_head width    0.9818181818181818
+plant_operator turbines 0.9818181818181818
+didn t  0.9817073170731707
+Stale See       0.9816849816849816
+Carbarsone diff 0.9814814814814815
+annual_generation conventional  0.9814814814814815
+pumped_storage run_of_river     0.9814814814814815
+Jepson Manual   0.9811320754716981
+Undelete Wikipedia      0.9809523809523809
+Footballbox collapsible 0.980440097799511
+2038 L  0.9803921568627451
+Wikify date     0.9803921568627451
+age2 2007       0.9803921568627451
+Gracillariinae stub     0.98
+qfd states      0.98
+External links  0.9799906933457422
+wasn t  0.9798488664987406
+mfd top 0.979381443298969
+fur Article     0.9792315680166147
+RevertList diff 0.9791666666666666
+competitiveness and     0.9788135593220338
+1374 L  0.9787234042553191
+MCCA Knockout   0.9787234042553191
+Rosids ordo     0.9787234042553191
+Startimes ZAP   0.9787234042553191
+TopTV Startimes 0.9787234042553191
+AgentTicketZoom TicketID        0.9782608695652174
+wingspan is     0.9781818181818182
+bef before      0.9779179810725552
+Ayeyarwady Region       0.9777777777777777
+couldn t        0.9776536312849162
+Bearian talk    0.9772727272727273
+Burpelson AFB   0.9772727272727273
+Volkssturm sowie        0.9772727272727273

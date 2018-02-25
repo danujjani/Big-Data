@@ -1,0 +1,168 @@
+pseudo distributed mode- Used one VM machine
+
+First start hadoop and yarn
+
+start-dfs.sh
+start-yarn.sh
+
+1. Created JAR FILE FROM .java file using below steps
+
+export HADOOP_CLASSPATH=$(hadoop classpath)
+echo export HADOOP_CLASSPATH
+
+
+a. Create a folder -<Working Folder> and copy my .java file into that
+b.  cd <Working Folder>
+c. ~/HW4$ javac -classpath ${HADOOP_CLASSPATH}  /home/ubuntu/HW4/PairCountCalc.java [ will get some .class files generated]
+d. in my <working folder> ...create a folder PairCountCalc_Classes- and jut moved the class files to this new folder
+
+e.  Ran below command to create a jar file . 
+ ~/HW4$ jar -cvf PairCountCalc.jar -C /home/ubuntu/HW4/PairCountCalc_Classes/ . 
+jar gets created
+
+2. create my input dir in hdfs and copied the input file there
+	hdfs dfs -mkdir /input1  
+	hdfs dfs -put /home/ubuntu/HW4/100KWikiText.txt /input1
+
+
+3. /HW4$ hadoop jar /home/ubuntu/HW4/PairCountCalc.jar PairCountCalc  /input1/100KWikiText.txt /output1 
+
+4. checked if output dir has output file created
+hdfs dfs -ls  /output1  
+
+5. Check contents of output
+hdfs dfs -cat /output1/part-r-00000
+
+6. Copied the part-r-00000 to local VM desktop
+hdfs dfs -copyToLocal /output/part-r-00000 /home/ubuntu/HW4
+
+================================================================================================================================================================================================================================================================
+Fuly distributed mode- Used three VM machine, one master and one as slaves. Hadoop with similar settings installed on all 3 machines. S
+
+In master VM:
+1.  Create these entries in  /etc/hosts
+
+sudo vi /etc/hosts  OR sudo nano /etc/hosts
+
+172.31.83.108	master
+172.31.86.111	slave1 
+172.31.94.178	slave2
+
+Other key configurations:
+
+note made a directory home/ubuntu/hadoopdata using :
+cd /home/ubuntu
+mkdir hadoopdata
+
+Configure the hadoop/etc/hadoop/core-site.xml:
+<configuration>
+
+<property>
+<name>fs.default.name</name>
+<value>hdfs://master:9000</value>
+</property>
+
+<property>
+<name>fs.defaultFS</name> <value>hdfs://master:8020/</value>
+</property>
+<property>
+<name>hadoop.temp.dir</name>
+<value>home/ubuntu/hadoopdata </value>
+</property>
+</configuration>
+
+Configure the hadoop/etc/hadoop/hdfs-site.xml:
+change the value based on number of nodes
+<configuration>
+<property>
+<name>dfs.replication</name> <value>2</value>
+</property>
+<property>
+<name>dfs.permissions</name>
+<value>false</value>
+</property> </configuration>
+
+Configure the hadoop/etc/hadoop/mapred-site.xml:
+copy mapred-site.xml from mapred-site.xml.template
+# cp mapred-site.xml.template mapred-site.xml
+# vim mapred-site.xml
+-> Add the following text between the configuration tabs.
+<property>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+
+Configure the yarn-site.xml
+<property>
+<name>yarn.nodemanager.aux-services</name>
+<value>mapreduce_shuffle</value>
+</property>
+
+<property>
+<name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+<value>org.apache.hadoop.mapred.ShuffleHandler </value>
+</property>
+
+<property>
+<name>yarn.resourcemanager.resource-tracker.address</name>
+<value>master:8025</value>
+</property>
+
+<property>
+<name>yarn.resourcemanager.scheduler.address</name>
+<value>master:8030</value>
+</property>
+
+<property>
+<name>yarn.resourcemanager.address</name>
+<value>master:8040</value>
+</property>
+
+
+2. Set up slave file in master machine
+
+Nano slaves – file opens remove localhost add below
+Slave1
+Slave2
+
+
+3. ssh-keygen -t rsa -P ''
+just press enter when asks for path dont enter any path
+
+4. cat .ssh/id_rsa.pub , it will show up the public key , I copied it
+
+5. sudo nano .ssh/authorized_keys
+paste the above copied key
+
+6. ssh master
+it will say you want to connect say yes,it will connect, then logout
+
+7. ssh slave1
+it will say permisson denied as keys of master not in authorized_keys of slave
+
+So logged in each  slave machine [slave1, slave2] using putty 
+
+sudo nano .ssh/authorized_keys
+paste the above copied key [key of master]
+
+8. and then from master's putty ran below commands to test if 
+ssh slave1
+ssh slave2
+
+9. Now start hadoop on master
+sart-dfs.hs
+start-yarn.sh
+
+Note: DataNode and NodeManager on slave machine also start
+
+10. Ran the commands  1 to 6 mentioned in pseudo distributed mode to run the code
+
+
+
+
+
+
+
+
+
+

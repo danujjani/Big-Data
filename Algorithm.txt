@@ -1,0 +1,58 @@
+Input -100KWikiText.txt -63MB File
+Output - top 100 relative frequent words
+Formula used:
+relative frequency = count(A,B)/count(A), where A and B are adjacent words in document
+
+a) In Mapper method:
+1) brokedown the entire documents in token of words using regex :\\w+> just to ensure I pick words containing [a-zA-Z_0-9] only and ignore the rest.
+2) I appended each word/token with # and formed WORD KEY , this was done to distinguish between word keys and wordpair keys.
+3) Next ran a loop for entire set of tokens generated at step 1 and formed a WORD PAIR KEY consisting of each word and its adjacent word.
+4) Ouput of Mapper written as  key and count=1
+
+
+b) In Combiner method
+For the mappers output , summed the count of each of keys like
+if maper1 output is : WordA 1 
+	WordA 1
+	WordA 1
+	WordB 1
+output of combiner1 WordA 3
+		 WordB 1
+
+
+
+c) In Reducer Class:
+
+Created a TreeSet global to all reducer.
+
+In Reducer Method:
+1) I check the key recivied by the Reducer has "#" appended to it at the end- 
+If yes then:
+	
+2)it means it is a WORD KEY and sum the values and get sum_A i.e denominator of my formula
+3)for each WORD KEY and its corresponding sum_A I store it a hashMap 
+
+Else:
+4) it means it is a WORD PAIR KEY and sum the values and get TotalCount i.e numerator of my formula
+5) Now I search the first word of WORD PAIR KEY in my hashmap created in step 3 and gets corresponding sum_A i.e get the corresponding  denominator
+
+6) So I get relative frequency by  dividing values I get step4(numerator) and step 5(denominator)
+7) if relative frequency =1, I ignore it as it means in that word pair, one of the word occured only once hence such word pair irrelvant and not frequenct, hence we ignore it.
+8) Added the relative frequency, TotalCount, WORD PAIR KEY to a TreeSet
+9) Used a customized comparator to sort this Treeset in descending order of relative frequency. [ As all reducers keep adding the values to this treeset , this ensures descending oder is maintained]
+10) Since my Treeset is in descending order, I keep removing the lastelements of the set everytime set>100
+
+In Reducer Class:
+11) Wrote customized cleanup method where I write the final output for all reducers . Since my treeset has all relative frequency in descending order and also it has only 100 values, we just write out
+the key and relative frequency values stored in Treeset.
+
+
+
+
+			
+
+
+
+	
+
+

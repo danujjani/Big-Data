@@ -1,0 +1,34 @@
+Input -OutPut Format Used
+
+Mapper
+
+Input : LongWritable, Text
+Output : Text, LongWritable
+
+
+Combiner
+
+Input : Text, LongWritable
+Output : Text, LongWritable
+
+Reducer
+
+Input :Text, LongWritable
+Output :Text, Text
+
+====================================================================================================
+
+Cluster Settings
+Number of VM Instances =3 (for full distributed mode)
+Number of VM Instances =1 (for pseudo distributed mode)
+Number of Mappers =1
+Number of Reducers =1
+
+=======================================================================================================================
+
+Running Time
+In Pseudo distrubuted Mode=120 seconds
+In Full distributed Mode=97 seconds
+
+
+
