@@ -1,0 +1,261 @@
+tar -xzvf oozie-2.3.2-cdh3u6.tar.gz
+
+cd oozie-2.3.2-cdh3u6
+
+cd bin
+
+./oozie-start.sh
+#it  should say succesfully
+
+try http://localhost:11000/oozie
+It wil ext-js error
+
+down ext js 2.2 from 
+
+ http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+
+copy in oozie folder in ubuntu m/c
+
+> unzip ext-2.2.zip
+
+#check if all file there :
+>cd ext-2.2
+>ll
+
+>cd oozie-2.3.2-cdh3u6/bin
+
+bin>ll
+bin>./oozie-stop.sh
+bin>./oozie-setup.sh -extjs /home/Oozie/oozie-4.1.0/libext/ext-2.2
+
+
+=================================================================================================================
+
+wget http://archive.apache.org/dist/oozie/4.1.0/oozie-4.1.0.tar.gz
+
+tar xzvf oozie-4.1.0.tar.gz
+
+cd oozie-4.1.0
+
+wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/sudo.repos.d/epel-apache-maven.repo
+
+
+
+
+-----------------------------------------------------------------------------------
+
+refrence: https://acadgild.com/blog/beginners-guide-for-oozie-installation/
+1.
+mkdir oozie
+sudo chmod -R 777 oozie
+cd oozie
+
+wget http://archive.apache.org/dist/oozie/4.1.0/oozie-4.1.0.tar.gz
+
+2. tar -xzvf oozie-4.1.0.tar.gz
+
+
+3. ls //oozie-4.1.0 would have been created
+
+4. cd oozie-4.1.0
+
+
+#maven installation:
+5.
+sudo apt-get install maven
+
+6. edit pom.xml
+
+        <targetJavaVersion>1.8</targetJavaVersion>
+
+and hadoop version to 2.8.1
+
+7.  mvn clean package assembly:single -P hadoop-2 -DskipTests
+
+8. cd /home/ubuntu/oozie/oozie-4.1.0/distro/target/oozie-4.1.0-distro
+
+here folder oozie-4.1.0 is what we want ..dsitro got created from step 7
+
+9. Create Oozie in /home/ubuntu/
+cd /home/ubuntu/
+sudo chmod -R 777 Oozie # IMP for full permission else some things wont work
+
+9. sudo cp -rf /home/ubuntu/oozie/oozie-4.1.0/distro/target/oozie-4.1.0-distro/ /home/ubuntu/Oozie/
+
+10. cd /home/ubuntu/Oozie/oozie-4.1.0
+
+11. sudo mkdir libext
+
+12. cd /home/ubuntu/Oozie/oozie-4.1.0
+
+
+ sudo cp -R /home/ubuntu/oozie/oozie-4.1.0/hadooplibs/hadoop-2/target/hadooplibs/hadooplib-2.3.0.oozie-4.1.0/* libext
+
+13.  cd /home/ubuntu/Oozie/oozie-4.1.0
+curl -O http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+
+14.
+ home/ubuntu/Oozie/oozie-4.1.0> sudo apt-get install zip
+home/ubuntu/Oozie/oozie-4.1.0>./bin/oozie-setup.sh prepare-war
+#you will get oozie ready to start
+
+
+15. in hadoop folder
+
+/home/ubuntu/hadoop-2.8.1/etc/hadoop
+
+add core-site.xml
+
+
+<property> 
+         <name>fs.default.name</name> 
+         <value>hdfs://ec2-34-237-203-52.compute-1.amazonaws.com:9000</value> 
+     </property> 
+  <property> 
+    <name>hadoop.proxyuser.ubuntu.hosts</name> 
+    <value>ec2-34-237-203-52.compute-1.amazonaws.com</value> 
+  </property> 
+  <property> 
+    <name>hadoop.proxyuser.ubuntu.groups</name> 
+    <value>ubuntu</value> 
+  </property> 
+
+
+16. go to /home/ubuntu/Oozie/oozie-4.1.0/conf
+
+edit oozie-site.xml under oozie.service.HadoopAccessorService.hadoop.configuration
+
+
+replace <value>*=hadoop-conf</value>
+
+<property>
+        <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
+        <value>*=/home/ubuntu/hadoop-2.8.1/etc/hadoop</value>
+        <description>
+            Comma separated AUTHORITY=HADOOP_CONF_DIR, where AUTHORITY is the HOST:PORT of
+            the Hadoop service (JobTracker, HDFS). The wildcard '*' configuration is
+            used when there is no exact match for an authority. The HADOOP_CONF_DIR contains
+            the relevant Hadoop *-site.xml files. If the path is relative is looked within
+            the Oozie configuration directory; though the path can be absolute (i.e. to point
+            to Hadoop client conf/ directories in the local filesystem.
+    </property>
+
+
+
+
+
+
+under oozie.service.workflowAppservice.system.libpath
+replace value
+<value>/user/${user.name}/share/lib</value>
+
+as
+<value>hdfs://ec2-34-237-203-52.compute-1.amazonaws.com:9000/user/${user.name}/share/lib</value>
+
+17. Now give the ownership permission to the oozie folder by using the below command
+
+
+sudo chown ubuntu /home/ubuntu/Oozie/oozie-4.1.0 (# sudo chown hadoop's_user_name oozie_file_path)
+
+18. Creating Sharelib directory in HDFS
+
+Note: Make sure that all your hadoop daemons are started properly.
+
+Move to > cd /home/ubuntu/Oozie/oozie-4.1.0/bin
+
+Now create a file in hdfs for storing the oozie contents with name sharelib using the below command:
+
+./oozie-setup.sh sharelib create -fs hdfs://ec2-34-237-203-52.compute-1.amazonaws.com:9000
+The above command will create a folder with name sharelib in HDFS.
+
+You will get a message as follows:
+
+the destination path for sharelib is: hdfs://ec2-34-237-203-52.compute-1.amazonaws.com:9000/user/ubuntu/share/lib/lib_20171204014351
+
+19. Creating Oozie Database
+[/home/ubuntu/Oozie/oozie-4.1.0/bin]$ ./bin/ooziedb.sh create -sqlfile oozie.sql -run
+
+#Oozie DB has been created for Oozie version '4.1.0'
+
+note: if get error saying sql server not installed...sudo apt-get install mysql-server
+
+With this step, your oozie installation is completed
+
+20. Now export the newly created oozie’s bin path into your .bashrc file from your home folder by using the below command
+ vim ~/.bashrc
+
+#set oozie home
+export OOZIE_VERSION=4.1.0
+export OOZIE_HOME=/home/ubuntu/Oozie/oozie-4.1.0
+export PATH=$OOZIE_HOME/bin:$PATH
+
+
+22.source ~/.bashrc
+
+
+
+
+
+
+
+deleting entire directory-->hdfs dfs -rmr /examples
+
+
+oozie job -oozie http://ec2-34-237-203-52.compute-1.amazonaws.com:11000/oozie -config job.properties -run
+
+but job.properties --keep it as localhost
+workflow.xml dont touch
+
+weburl -http://ec2-34-237-203-52.compute-1.amazonaws.com:11000/oozie/
+
+
+
+job.properties---stick to sumaj's blog
+workflow.xml---no change
+
+just run oozie job -oozie http://localhost:11000/oozie -config job.properties -run
+
+startt hadoop, and oozier then run this
+
+ oozie job -oozie http://ec2-34-237-203-52.compute-1.amazonaws.com:11000/oozie -config job.properties -run
+
+
+ oozie job -oozie http://localhost:11000/oozie -config job.properties -run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
